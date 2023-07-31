@@ -1,10 +1,10 @@
-# Use an official OpenJDK runtime as a base image
-FROM openjdk:17-oracle
-
-# Set the working directory in the container
+# maven jdk-17 image
+FROM maven:3.8.3-openjdk-17
 WORKDIR /app
 
-COPY src/main/resources/application.properties /app/
-COPY target/*.jar /app/app.jar
+COPY src/ /app/src
+COPY pom.xml /app/pom.xml
+COPY mvnw /app/mvnw
 
-CMD ["java", "-jar", "/app/app.jar"]
+RUN mvn package
+CMD ["mvn", "spring-boot:run"]
